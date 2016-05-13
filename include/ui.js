@@ -53,7 +53,12 @@ var UI;
 
         // Render default UI and initialize settings menu
         start: function(callback) {
-            UI.isTouchDevice = 'ontouchstart' in document.documentElement;
+            UI.isTouchDevice = (function() {
+              if ('novncOverrideTouch' in window) {
+                return window.novncOverrideTouch;
+              }
+              return 'ontouchstart' in document.documentElement;
+            })();
 
             // Stylesheet selection dropdown
             var sheet = WebUtil.selectStylesheet();
